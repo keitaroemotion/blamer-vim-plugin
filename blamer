@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+
+if(len(sys.argv) < 3):
+    sys.exit()
+
+file   = sys.argv[1]
+rownum = int(sys.argv[2])
+
+out = subprocess.Popen(["git", "blame", file], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+stdout, stderr = out.communicate()
+count = 0 
+for line in stdout.decode("utf-8").split('\n'):
+    count = count + 1
+    if(count == rownum):
+        print(line)
